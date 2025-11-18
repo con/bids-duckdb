@@ -1,0 +1,123 @@
+[build-system]
+# Setuptools version should match setup.py; wheel because pip will insert it noisily
+requires = ["setuptools >= 38.3.0", "wheel"]
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = "bids-duckdb"
+description = "Interface BIDS datasets using DuckDB"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "BIDS-DuckDB developers", email = "yoh@onerussian.com"},
+]
+maintainers = [
+    {name = "BIDS-DuckDB developers", email = "yoh@onerussian.com"},
+]
+keywords = [
+    "BIDS",
+    "Brain Imaging Data Structure",
+    "DuckDB",
+    "neuroscience",
+    "neuroimaging",
+    "data analysis",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "duckdb >= 0.9.0",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+style = [
+    "flake8",
+    "pre-commit",
+]
+test = [
+    "coverage",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+]
+all = [
+    "bids-duckdb[style]",
+    "bids-duckdb[test]",
+]
+
+[project.urls]
+Homepage = "https://github.com/con/bids-duckdb"
+"Source Code" = "https://github.com/con/bids-duckdb"
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["bids_duckdb*"]
+namespaces = false
+
+[tool.black]
+exclude='\.eggs|\.git|\.mypy_cache|\.tox|\.venv|_build|buck-out|build|dist|_version\.py|versioneer\.py'
+
+[tool.isort]
+profile = "black"
+force_sort_within_sections = true
+reverse_relative = true
+sort_relative_in_force_sorted_sections = true
+known_first_party = ["bids_duckdb"]
+
+[tool.versioneer]
+VCS = "git"
+style = "pep440"
+versionfile_source = "bids_duckdb/_version.py"
+versionfile_build = "bids_duckdb/_version.py"
+tag_prefix = ""
+parentdir_prefix = ""
+
+[tool.codespell]
+skip = "_version.py,versioneer.py,venv,venvs,pyproject.toml"
+ignore-words-list = "ba,bu,fo"
+
+[tool.mypy]
+allow_incomplete_defs = false
+ignore_missing_imports = false
+no_implicit_optional = true
+local_partial_types = true
+pretty = true
+show_error_codes = true
+show_traceback = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+exclude = "_version\\.py"
+
+[[tool.mypy.overrides]]
+module = "bids_duckdb.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "bids_duckdb._version",
+]
+follow_imports = "skip"
+
+[[tool.mypy.overrides]]
+module = [
+    "duckdb.*",
+]
+ignore_missing_imports = true
