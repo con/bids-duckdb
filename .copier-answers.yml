@@ -1,0 +1,38 @@
+# Changes here will be overwritten by Copier
+SelectCitation:
+- AddCitationFile_flag
+- AddCFFConvert_flag
+SelectCodeQualityFeatures:
+- AddLocalTests_flag
+- SelectGitHubActions_flag
+- AddLinting_flag
+- AddPreCommit_flag
+- AddSonarCloud_flag
+- AddEditorConfig_flag
+SelectCommunityFeatures:
+- AddCodeConduct_flag
+- AddContributing_flag
+SelectDocumentationFeatures:
+- AddLocalDocumentation_flag
+- AddOnlineDocumentation_flag
+- AddDevDoc_flag
+- AddGitHubActionDocumentation_flag
+SelectGitHubActions:
+- AddGitHubActionBuild_flag
+SelectPublishReleaseFeatures:
+- SelectCitation_flag
+- AddChangeLog_flag
+- AddZenodo_flag
+_commit: 0.6.1
+_src_path: https://github.com/nlesc/python-template.git
+code_of_conduct_email: debian@onerussian.com
+copyright_holder: Yaroslav Halchenko
+email: debian@onerussian.com
+full_name: Yaroslav Halchenko
+github_organization: con
+keywords: neuroscience, data standard, duckdb
+license: Apachev2
+package_name: bids_duckdb
+package_short_description: Python package to provide DuckDB interface BIDS datasets
+template_profile: recommended
+version: 0.1.0

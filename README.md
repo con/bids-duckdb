@@ -1,2 +1,44 @@
-# bids-duckdb
-Interface BIDS datasets using duckdb
+## Badges
+
+(Customize these badges with your own links, and check https://shields.io/ or https://badgen.net/ to see which other badges are available.)
+
+| fair-software.eu recommendations | |
+| :-- | :--  |
+| (1/5) code repository              | [![github repo badge](https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue)](https://github.com/con/bids_duckdb) |
+| (2/5) license                      | [![github license badge](https://img.shields.io/github/license/con/bids_duckdb)](https://github.com/con/bids_duckdb) |
+| (3/5) community registry           | [![RSD](https://img.shields.io/badge/rsd-bids_duckdb-00a3e3.svg)](https://www.research-software.nl/software/bids_duckdb) [![workflow pypi badge](https://img.shields.io/pypi/v/bids_duckdb.svg?colorB=blue)](https://pypi.python.org/project/bids_duckdb/) |
+| (4/5) citation                     | [![DOI](https://zenodo.org/badge/DOI/<replace-with-created-DOI>.svg)](https://doi.org/<replace-with-created-DOI>)|
+| (5/5) checklist                    | [![workflow cii badge](https://bestpractices.coreinfrastructure.org/projects/<replace-with-created-project-identifier>/badge)](https://bestpractices.coreinfrastructure.org/projects/<replace-with-created-project-identifier>) |
+| howfairis                          | [![fair-software badge](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B-yellow)](https://fair-software.eu) |
+| **Other best practices**           | &nbsp; |
+| Static analysis                    | [![workflow scq badge](https://sonarcloud.io/api/project_badges/measure?project=con_bids_duckdb&metric=alert_status)](https://sonarcloud.io/dashboard?id=con_bids_duckdb) |
+| Coverage                           | [![workflow scc badge](https://sonarcloud.io/api/project_badges/measure?project=con_bids_duckdb&metric=coverage)](https://sonarcloud.io/dashboard?id=con_bids_duckdb) || Documentation                      | [![Documentation Status](https://readthedocs.org/projects/bids_duckdb/badge/?version=latest)](https://bids_duckdb.readthedocs.io/en/latest/?badge=latest) || **GitHub Actions**                 | &nbsp; |
+| Build                              | [![build](https://github.com/con/bids_duckdb/actions/workflows/build.yml/badge.svg)](https://github.com/con/bids_duckdb/actions/workflows/build.yml) |
+| Citation data consistency          | [![cffconvert](https://github.com/con/bids_duckdb/actions/workflows/cffconvert.yml/badge.svg)](https://github.com/con/bids_duckdb/actions/workflows/cffconvert.yml) || SonarCloud                         | [![sonarcloud](https://github.com/con/bids_duckdb/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/con/bids_duckdb/actions/workflows/sonarcloud.yml) |## How to use bids_duckdb
+
+Python package to provide DuckDB interface BIDS datasets
+
+The project setup is documented in [project_setup.md](project_setup.md). Feel free to remove this document (and/or the link to this document) if you don't need it.
+
+## Installation
+
+To install bids_duckdb from GitHub repository, do:
+
+```console
+git clone git@github.com:con/bids_duckdb.git
+cd bids_duckdb
+python -m pip install .
+```
+
+## Documentation
+
+Include a link to your project's full documentation here.
+
+## Contributing
+
+If you want to contribute to the development of bids_duckdb,
+have a look at the [contribution guidelines](CONTRIBUTING.md).
+
+## Credits
+
+This package was created with [Copier](https://github.com/copier-org/copier) and the [NLeSC/python-template](https://github.com/NLeSC/python-template).

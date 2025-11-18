@@ -1,0 +1,16 @@
+# YAML 1.2
+---
+cff-version: "1.2.0"
+title: "bids_duckdb"
+authors:
+  - family-names: Halchenko
+    given-names: Yaroslav
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+date-released: 2025-11-18
+version: "0.1.0"
+repository-code: "https://github.com/con/bids_duckdb"
+keywords:
+  - "neuroscience"
+  - " data standard"
+  - " duckdb"
+message: "If you use this software, please cite it using these metadata."
