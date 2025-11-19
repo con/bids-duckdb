@@ -16,9 +16,160 @@
 | Build                              | [![build](https://github.com/con/bids_duckdb/actions/workflows/build.yml/badge.svg)](https://github.com/con/bids_duckdb/actions/workflows/build.yml) |
 | Citation data consistency          | [![cffconvert](https://github.com/con/bids_duckdb/actions/workflows/cffconvert.yml/badge.svg)](https://github.com/con/bids_duckdb/actions/workflows/cffconvert.yml) || SonarCloud                         | [![sonarcloud](https://github.com/con/bids_duckdb/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/con/bids_duckdb/actions/workflows/sonarcloud.yml) |## How to use bids_duckdb
 
-Python package to provide DuckDB interface BIDS datasets
+Python package to provide DuckDB interface to BIDS datasets with three alternative approaches for loading data, allowing performance comparison and flexibility.
 
-The project setup is documented in [project_setup.md](project_setup.md). Feel free to remove this document (and/or the link to this document) if you don't need it.
+### Overview
+
+`bids_duckdb` loads BIDS (Brain Imaging Data Structure) datasets into DuckDB, automatically extracting metadata from BIDS-compliant filenames and hierarchies. It supports loading both `.tsv` files and `.json` sidecar files with entity information parsed from filenames (e.g., `sub-01_ses-pre_task-rest_bold.nii.gz` → `subject=01, session=pre, task=rest`).
+
+**Key Features:**
+- 🔄 **Three switchable approaches** for loading data (SQL regex, Python preprocessor, Table functions)
+- 🗺️ **Dynamic BIDS schema loading** - fetches entity definitions from the official BIDS specification
+- 🏷️ **Entity name expansion** - maps short names (`sub`) to full names (`subject`)
+- ⚡ **Performance benchmarking** - compare approaches on your dataset
+- 🔍 **SQL queries** on BIDS data with full DuckDB capabilities
+
+### Quick Start
+
+```python
+import bids_duckdb
+
+# Choose your approach
+loader = bids_duckdb.SQLRegexLoader("/path/to/bids/dataset")
+
+# Load TSV files
+loader.load_tsv_files()
+
+# Query with SQL
+result = loader.query("""
+    SELECT subject, task, COUNT(*) as n
+    FROM bids_tsv_data
+    WHERE task = 'rest'
+    GROUP BY subject, task
+""").fetchdf()
+
+print(result)
+```
+
+### The Three Approaches
+
+#### Approach 1: SQL Regex Parsing (Lazy)
+
+Uses DuckDB's built-in regex functions to parse entities directly in SQL.
+
+```python
+from bids_duckdb import SQLRegexLoader
+
+loader = SQLRegexLoader("/path/to/bids/dataset")
+loader.load_tsv_files()
+```
+
+**Pros:**
+- Minimal Python overhead
+- Lazy evaluation - only parses what's needed
+- Leverages DuckDB's optimized regex engine
+
+**Cons:**
+- SQL regex can be complex for debugging
+- Need to know entities upfront
+- Potentially slower regex performance vs Python
+
+**Best for:** Simple datasets, when you want minimal overhead
+
+#### Approach 2: Python Preprocessor (Eager)
+
+Scans files in Python, parses entities upfront, creates materialized tables.
+
+```python
+from bids_duckdb import PythonPreprocessLoader
+
+loader = PythonPreprocessLoader("/path/to/bids/dataset")
+loader.load_tsv_files()
+loader.load_json_files()  # Also load JSON sidecars
+```
+
+**Pros:**
+- Full control over parsing logic
+- Can handle complex BIDS patterns
+- Better error handling and debugging
+- Can load JSON content directly
+
+**Cons:**
+- Higher memory usage (materializes all metadata)
+- Slower initial load time
+- Requires scanning all files upfront
+
+**Best for:** Complex BIDS datasets, when you need full control
+
+#### Approach 3: Table Functions (Lazy)
+
+Creates Python table-valued functions that generate rows on-demand.
+
+```python
+from bids_duckdb import TableFunctionLoader
+
+loader = TableFunctionLoader("/path/to/bids/dataset")
+loader.load_tsv_files()  # Creates views, not tables
+
+# Optionally materialize for repeated queries
+loader.materialize_view("bids_tsv_data")
+```
+
+**Pros:**
+- Lazy evaluation - only processes what's needed
+- Memory efficient
+- Flexible - can implement complex logic
+- Can filter before full processing
+
+**Cons:**
+- Python function call overhead
+- May be slower for full table scans
+
+**Best for:** Selective queries, memory-constrained environments
+
+### Benchmarking
+
+Compare all approaches on your dataset:
+
+```python
+from bids_duckdb import run_benchmark
+
+results = run_benchmark(
+    "/path/to/bids/dataset",
+    approaches=["sql", "python", "table_function"]
+)
+```
+
+Or use the included script:
+
+```bash
+python examples/benchmark_comparison.py /path/to/bids/dataset
+```
+
+### BIDS Schema Integration
+
+The library dynamically loads BIDS entity definitions from the official specification:
+
+```python
+from bids_duckdb import BIDSSchema
+
+schema = BIDSSchema()  # Fetches from bids-standard/bids-specification
+mapping = schema.get_entity_mapping()
+# {'sub': 'subject', 'ses': 'session', 'task': 'task', ...}
+```
+
+This allows:
+- **Automatic entity detection** based on the latest BIDS spec
+- **Full name expansion** in query results (subject instead of sub)
+- **Version flexibility** - can specify different BIDS spec versions
+
+### Examples
+
+See the `examples/` directory for:
+- `basic_usage.py` - Individual approach examples
+- `benchmark_comparison.py` - Performance comparison
+
+The project setup is documented in [project_setup.md](project_setup.md).
 
 ## Installation
 

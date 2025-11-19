@@ -22,7 +22,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = []
+dependencies = [
+    "duckdb>=0.9.0",
+    "pyyaml>=6.0",
+    "requests>=2.31.0",
+]
 description = "Python package to provide DuckDB interface BIDS datasets"
 keywords = ["neuroscience"," data standard"," duckdb"]
 license = {file = "LICENSE"}
